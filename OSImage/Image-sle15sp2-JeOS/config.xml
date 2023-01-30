@@ -88,7 +88,9 @@
         -->
 
         <package name="kernel-default"/>
-	<package name="salt-minion"/>
+
+    <!-- SUMA 4.3 defaults to salt bundle -->
+	<package name="venv-salt-minion"/>
 
 	<!-- Remove saltboot
 	<package name="dracut-saltboot"/>
