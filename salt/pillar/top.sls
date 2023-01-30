@@ -7,8 +7,8 @@
 
 base:
   '*':
-    {% if k8s-distro = 'k3s' %}
+    {% if k8s-distro == 'k3s' %}
     - k3s
-    {% elif k8s-distro = 'rke2' %}
+    {% elif k8s-distro == 'rke2' %}
     - rke2
     {% endif %}
