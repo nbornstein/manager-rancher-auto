@@ -123,6 +123,9 @@ Notice instead of using a wildcard here for the salt command I'm sending the que
 
 ## Configuration Channels Setup
 
+- add salt configuration channel including contents of install_k3s-init.sls (screenshot)
+- add register-rancher.sh as a managed file in the configuration channel (screenshot)
+
 ### Master node channels
 
 ### Worker node Channels
@@ -131,4 +134,4 @@ Notice instead of using a wildcard here for the salt command I'm sending the que
 
 ## Image Deployment
 
-```Test edits```
+

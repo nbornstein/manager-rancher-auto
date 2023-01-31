@@ -1,5 +1,13 @@
 {% set k3s_token = salt['pillar.get']('k3s:token') %}
 
+/usr/local/bin/register-rancher.sh:
+  file.managed:
+    - source: salt://manager_org_1/install_k3s-init/usr/local/bin/register-rancher.sh
+    - name: "/usr/local/bin/register-rancher.sh"
+    - user: root
+    - group: root
+    - mode: 744
+
 k3s_setup1:
   cmd.run:
     - name: "curl -sfL 'https://get.k3s.io' | sh -s - server --token {{ k3s_token }}"

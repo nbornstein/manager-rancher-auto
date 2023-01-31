@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RANCHER_URL=https://rancher.susedojo.com
+RANCHER_URL=https://rancher.geeko.land
 
 # Create imported Cluster
 TOKEN={token-RancherAPIToken}
