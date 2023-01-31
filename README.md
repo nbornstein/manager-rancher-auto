@@ -97,7 +97,7 @@ In /salt/pillar/ there is a file called top.sls which gives the name of the pill
 These files needs to be located in /srv/pillar/ on the SUSE Manager server.  
 lib.sls contains variable definitions for various pillars so that you can enter them there and not have to edit multiple files.
 ```
-k8s_distro = 'k3s' %}
+{% set k8s_distro = 'k3s' %}
 
 {% set k8s_server = '<your k8s master node>' %}
 {% set k8s_token = '<your token>' %}
@@ -113,11 +113,11 @@ salt '*' saltutil.refresh_pillar
 ```
 To print the new k8s pillar data:
 ```
-salt '<your k8s master node>' pillar.get k3s
+salt '<your k8s node>' pillar.get k3s
 ```
 To just grab the token you can also run:
 ```
-salt '<your k8s master node>' pillar.get k3s:token
+salt '<your k8s node>' pillar.get k3s:token
 ```
 Notice instead of using a wildcard here for the salt command I'm sending the query to the salt master server in my setup. As I mentioned in a previous step, every server will print this data because the scope in the first top.sls file is for all minions to see this pillar data. You could modify that scope in your environment to the minions that are part of the K3s cluster. You would need to know those systems beforehand.  
 
@@ -131,6 +131,8 @@ Notice instead of using a wildcard here for the salt command I'm sending the que
 ### Worker node Channels
 
 ## Salt States
+
+- assign salt states to systems or groups
 
 ## Image Deployment
 
