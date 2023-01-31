@@ -1,7 +1,10 @@
 #!/bin/bash
+
+RANCHER_URL=https://rancher.susedojo.com
+
 # Create imported Cluster
 TOKEN={token-RancherAPIToken}
-CLUSTER_ID=$(curl -k https://rancher.susedojo.com/v3/clusters \
+CLUSTER_ID=$(curl -k $RANCHER_URL/v3/clusters \
   -H "content-type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
   --data-binary '{
@@ -14,7 +17,7 @@ echo $CLUSTER_ID
   
 # Register Cluster to Rancher
 k3sregister() {
-CLUSTER_CONNECT=$(curl -k https://rancher.susedojo.com/v3/clusterregistrationtoken \
+CLUSTER_CONNECT=$(curl -k $RANCHER_URL/v3/clusterregistrationtoken \
   -H "content-type: application/json" \
   -H "Authorization: Bearer $TOKEN" \
   --data-binary '{
