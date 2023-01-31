@@ -93,34 +93,31 @@ Once it is finished you can navigate to **Images --> Image List** in order to vi
 
 ## Salt Pillar Creation  
 The pillar data in this repository located in /salt/pillar/ is used to create the K3s pillar data on the SUSE Manager Server so that the salt states will have the right values when they execute.  
-In /salt/pillar/ there is a file called top.sls which gives the name of the pillar and the scope of minions that it applies to, which in this case is a wildcard for all minions. In production deployments you would want to narrow this down to a group of minions for your K3s/RKE cluster.
+In /salt/pillar/ there is a file called top.sls which gives the name of the pillar and the scope of minions that it applies to, which in this case is a wildcard for all minions. In production deployments you would want to narrow this down to a group of minions for your K3s/RKE cluster. 
 These files needs to be located in /srv/pillar/ on the SUSE Manager server.  
+lib.sls contains variable definitions for various pillars so that you can enter them there and not have to edit multiple files.
 ```
-  base:  
-    '*':  
-      - k3s  
-```
-Under the /salt/pillar/k3s/ you will see init.sls which holds the pillar data.  
-You should populate "server" value with your k3s master node. The value for token can be whatever you want it to. You can get fancy with a 128 bit token value for example. Here is something for 32 char if you want a random string for your token. `cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
-```
-k3s:
-  server: k3s-1.susedojo.com
-  token: K3sdemotokenwithSUMA 
-  cni:
-  datastore-endpoint:
-```
+k8s_distro = 'k3s' %}
+
+{% set k8s_server = '<your k8s master node>' %}
+{% set k8s_token = '<your token>' %}
+{% set k8s_cni = '' %}
+{% set k8s_datastore_endpoint
+``` 
+"k8s_distro" indicates whether to install k3s or rke2.
+You should populate "k8s_server" value with your k3s or rke2 master node. The value for token can be whatever you want it to. You can get fancy with a 128 bit token value for example. Here is something for 32 char if you want a random string for your token. `cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
 Once you have stored thse files in /srv/pillar on the SUSE Manager Server then you will need to run a few commands to load the pillar data.  
 Refresh pillar data on SUSE Manager Server:    
 ```
 salt '*' saltutil.refresh_pillar
 ```
-To print the new k3s pillar data:
+To print the new k8s pillar data:
 ```
-salt 'k3s-1.susedojo.com' pillar.get k3s
+salt '<your k8s master node>' pillar.get k3s
 ```
 To just grab the token you can also run:
 ```
-salt 'k3s-1.susedojo.com' pillar.get k3s:token
+salt '<your k8s master node>' pillar.get k3s:token
 ```
 Notice instead of using a wildcard here for the salt command I'm sending the query to the salt master server in my setup. As I mentioned in a previous step, every server will print this data because the scope in the first top.sls file is for all minions to see this pillar data. You could modify that scope in your environment to the minions that are part of the K3s cluster. You would need to know those systems beforehand.  
 
