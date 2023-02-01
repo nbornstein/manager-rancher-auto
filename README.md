@@ -136,4 +136,6 @@ Notice instead of using a wildcard here for the salt command I'm sending the que
 
 ## Image Deployment
 
+## Rancher API Key
 
+- create an API key with undefined scope, copy the bearer token, and put that in register-rancher.sh (see https://ranchermanager.docs.rancher.com/v2.5/reference-guides/user-settings/api-keys#creating-an-api-key)
