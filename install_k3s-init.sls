@@ -10,11 +10,11 @@
 
 k3s_setup1:
   cmd.run:
-    - name: "curl -sfL 'https://get.k3s.io' | sh -s - server --token {{ k3s_token }}"
+    - name: "curl -sfL 'https://get.k3s.io' | INSTALL_K3S_VERSION='v1.24.10+k3s1' sh -s - server --token {{ k3s_token }}"
 
 k3s_setup2:
   cmd.run:
-    - name: "while [ ! -f /tmp/K3s-Ready ]; do kubectl get nodes | grep Ready; if [ $? -eq 0 ]; then touch /tmp/K3s-Ready; fi; done"
+    - name: "while [ ! -f /tmp/K3s-Ready ]; do sleep 5; kubectl get nodes | grep -w 'Ready'; if [ $? -eq 0 ]; then touch /tmp/K3s-Ready; fi; done"
 
 k3s_setup3:
   cmd.run: 
